@@ -1,0 +1,74 @@
+html,body {
+   height: 100%;
+   margin: 0;
+   overflow: hidden;
+}
+
+#app {
+  height: 100%;
+}
+
+.header {
+  font-family: 'Epilogue', sans-serif;
+  transform: rotate(-9deg);
+  margin-bottom: 3rem;
+  padding-top: 2rem;
+  text-align: center;
+}
+
+.calendar {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.content {
+  width: 100%;
+  text-align: center;
+}
+
+.working-home {
+  background-color: #3182ce;
+}
+
+.working-no {
+  background-color: #38a169;
+}
+
+.ilustration {
+  width: 95%;
+  margin-top: 2rem;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  font-family: 'Epilogue', sans-serif;
+  width: 100%;
+  text-align: center;
+}
+
+
+.next-day-item {
+  font-family: 'Epilogue', sans-serif;
+  font-weight: 200;
+}
+
+/* makes days of next/prev month "visible" */
+.vc-day .vc-opacity-0 {
+  opacity: 0.3;
+}
+
+.vc-day .vc-pointer-events-none {
+  pointer-events: all;
+}
+
+/* overrides light color joining days in range */
+.vc-bg-blue-200 {
+  background-color: #3182ce !important;
+}
+
+.vc-bg-green-200 {
+  background-color: #38a169 !important;
+}
