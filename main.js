@@ -101,12 +101,6 @@ new Vue({
       return this.tomorrowWillBe === 'freeDay';
     },
 
-    getImg: function() {
-      if (this.todayIsFree) return './img/working-no.svg';
-      if (this.todayIsOffice) return './img/working-office.svg';
-      if (this.todayIsRemote) return './img/working-home.svg';
-    },
-
     tomorrowMessage: function() {
       if (this.tomorrowWillBeFree) return 'NO WORKING TOMORROW!';
       if (this.tomorrowWillBeOffice) return 'Tomorrow working from OFFICE';

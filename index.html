@@ -21,9 +21,6 @@
         <div class="calendar">
           <v-calendar :attributes="attributes" is-expanded></v-calendar>
         </div>
-        <div class="content">
-          <img class="ilustration" v-bind:src="getImg" />
-        </div>
         <div id="footer" :class="{ 'working-home': todayIsRemote, office: todayIsOffice, 'working-no': todayIsFree}">
           {{tomorrowMessage}}!
         </div>

@@ -42,8 +42,8 @@ html,body {
 #footer {
   position: absolute;
   bottom: 0;
-  padding-bottom: 1rem;
-  padding-top: 1rem;
+  padding-bottom: 2rem;
+  padding-top: 2rem;
   font-family: 'Epilogue', sans-serif;
   width: 100%;
   text-align: center;
