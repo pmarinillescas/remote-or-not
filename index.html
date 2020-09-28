@@ -19,7 +19,7 @@
           or not?
         </h1>
         <div class="calendar">
-          <v-calendar :attributes="attributes" is-expanded></v-calendar>
+          <v-calendar :attributes="attributes" :columns="$screens({ default: 1, lg: 3 })" :rows="$screens({ default: 1, lg: 2 })" :is-expanded="$screens({ default: true, lg: false })"></v-calendar>
         </div>
         <div id="footer" :class="{ 'working-home': todayIsRemote, office: todayIsOffice, 'working-no': todayIsFree}">
           {{tomorrowMessage}}!
