@@ -61,9 +61,10 @@ new Vue({
   data: {
 
     todayIs: 'officeDay',
-    tomorrowWillBe: 'officeDay',
+    tomorrowWillBe: null,
 
     attributes: [
+      // highlight current day:
       {
         key: 'today',
         highlight: {
@@ -71,6 +72,16 @@ new Vue({
           fillMode: 'light'
         },
         dates: new Date()
+      },
+      // highlight current week:
+      {
+        key: 'current-week',
+        highlight: {
+          color: null,
+          class: 'custom'
+        },
+        order: -1,
+        dates: [{start: luxon.DateTime.local().startOf('week').toJSDate(), end: luxon.DateTime.local().endOf('week').toJSDate()}]
       }
     ]
 
@@ -104,7 +115,7 @@ new Vue({
     tomorrowMessage: function() {
       if (this.tomorrowWillBeFree) return 'NO WORKING TOMORROW!';
       if (this.tomorrowWillBeOffice) return 'Tomorrow working from OFFICE';
-      if (this.tomorrowWillBeRemote) return 'Tomrrow working from HOME!';
+      if (this.tomorrowWillBeRemote) return 'Tomorrow working from HOME!';
     }
   }
 })

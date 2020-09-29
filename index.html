@@ -21,8 +21,8 @@
         <div class="calendar">
           <v-calendar :attributes="attributes" :columns="$screens({ default: 1, lg: 3 })" :rows="$screens({ default: 1, lg: 2 })" :is-expanded="$screens({ default: true, lg: false })"></v-calendar>
         </div>
-        <div id="footer" :class="{ 'working-home': todayIsRemote, office: todayIsOffice, 'working-no': todayIsFree}">
-          {{tomorrowMessage}}!
+        <div id="footer" :class="{ 'working-home': tomorrowWillBeRemote, office: tomorrowWillBeOffice, 'working-no': tomorrowWillBeFree}" v-cloak>
+          {{tomorrowMessage}}
         </div>
       <!-- </div> -->
     </div>
