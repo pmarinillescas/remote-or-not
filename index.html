@@ -4,6 +4,10 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
     <meta http-equiv='x-ua-compatible' content='ie=edge'>
+    <title>remote?</title>
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico"/>
+    <meta name="theme-color" content="#ffffff">
     <!-- IMPORTANT: No CSS link needed as of v1 - It's all inlined -->
     <!-- Pre v1.0.0 versions need the minified css -->
     <!-- <link rel='stylesheet' href='https://unpkg.com/v-calendar/lib/v-calendar.min.css'> -->
@@ -15,8 +19,9 @@
     <div id='app' :class="{ 'working-home': todayIsRemote, office: todayIsOffice, 'working-no': todayIsFree}">
       <!-- <div class="working-no"> -->
         <h1 class="header">
-          remote</br>
-          or not?
+          <span>remote</span></br>
+          <span>or not</span>
+          <span>?</span>
         </h1>
         <div class="calendar">
           <v-calendar :attributes="attributes" :columns="$screens({ default: 1, lg: 3 })" :rows="$screens({ default: 1, lg: 2 })" :is-expanded="$screens({ default: true, lg: false })"></v-calendar>
