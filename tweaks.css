@@ -1,7 +1,7 @@
 html,body {
    height: 100%;
    margin: 0;
-   overflow: hidden;
+   overflow: auto;
 }
 
 body {
@@ -19,7 +19,6 @@ body {
 
 .header {
   font-family: 'Epilogue', sans-serif;
-  transform: rotate(-9deg);
   margin-bottom: 3rem;
   padding-top: 2rem;
   text-align: center;
@@ -66,18 +65,29 @@ body {
   font-weight: 200;
 }
 
-/* centers calendar */
+/* centers calendar and adds card-like style */
 .vc-container {
   margin: auto;
+  border: 0px !important;
+  padding: 5px 15px !important;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
 /* hides until values are resolved/loaded */
 [v-cloak] { display: none; }
 
 /* makes days of next/prev month "visible" */
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 768px) {
+
   .vc-day .vc-opacity-0 {
     opacity: 0.3;
+  }
+
+  .vc-container {
+    /* margin: auto; */
+    /* border: 0px !important; */
+    padding: 2px 2px !important;
+    /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); */
   }
 }
 
