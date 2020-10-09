@@ -103,3 +103,7 @@ body {
 .vc-bg-green-200 {
   background-color: #38a169 !important;
 }
+
+.weekday-7, .weekday-1 {
+  opacity: 0.3;
+}
