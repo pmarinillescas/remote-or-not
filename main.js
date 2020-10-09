@@ -67,10 +67,7 @@ new Vue({
       // highlight current day:
       {
         key: 'today',
-        highlight: {
-          color: 'orange',
-          fillMode: 'light'
-        },
+        bar: 'red',
         dates: new Date()
       },
       // highlight current week:
