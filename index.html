@@ -16,7 +16,7 @@
   </head>
 
   <body>
-    <div id='app' :class="{ 'working-home': todayIsRemote, office: todayIsOffice, 'working-no': todayIsFree}">
+    <div id='app' :class="{ 'working-home': todayIsRemote, 'working-no': todayIsFree, 'weekend': todayIsWeekend, 'office': todayIsOffice}">
       <!-- <div class="working-no"> -->
         <h1 class="header">
           <span>remote</span></br>
@@ -24,9 +24,15 @@
           <span>?</span>
         </h1>
         <div class="calendar">
-          <v-calendar :attributes="attributes" :columns="$screens({ default: 1, md: 2, lg: 4 })" :rows="$screens({ default: 1, md: 2, lg: 2 })" :is-expanded="$screens({ default: true, md: true, lg: false })"></v-calendar>
+          <v-calendar
+            :attributes="attributes"
+            :columns="$screens({ default: 1, md: 2, lg: 4 })"
+            :rows="$screens({ default: 1, md: 2, lg: 2 })"
+            :is-expanded="$screens({ default: true, md: true, lg: false })"
+            :min-date="minDate">
+          </v-calendar>
         </div>
-        <div id="footer" :class="{ 'working-home': tomorrowWillBeRemote, office: tomorrowWillBeOffice, 'working-no': tomorrowWillBeFree}" v-cloak>
+        <div id="footer" :class="{ 'working-home': tomorrowWillBeRemote, office: tomorrowWillBeOffice, 'working-no': tomorrowWillBeFree, 'weekend': tomorrowWillBeWeekend}" v-cloak>
           {{tomorrowMessage}}
         </div>
       <!-- </div> -->
@@ -37,9 +43,9 @@
 
     <!-- 2. Link VCalendar Javascript (Plugin automatically installed) -->
     <script src='https://unpkg.com/v-calendar'></script>
+    <script src="https://moment.github.io/luxon/global/luxon.min.js"></script>
 
     <!--3. Create the Vue instance-->
-    <script src="https://moment.github.io/luxon/global/luxon.min.js"></script>
     <script src="dates.json"></script>
     <script src='./main.js'></script>
 

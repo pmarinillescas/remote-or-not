@@ -3,33 +3,32 @@ new Vue({
   created: function() {
     // Parses a single date, setting day type if it's current date or tomorrow's:
     const parseDate = (date, dayType) => {
-      let parsedDate = new Date(date);
-      if (luxon.DateTime.fromJSDate(parsedDate).startOf('day') == luxon.DateTime.local().startOf('day')) this.todayIs = dayType;
-      if (luxon.DateTime.fromJSDate(parsedDate).startOf('day') == luxon.DateTime.local().plus({days: 1}).startOf('day')) this.tomorrowWillBe = dayType;
-      return parsedDate;
+      let todayStartOfDay = luxon.DateTime.fromJSDate(this.currentDate).startOf('day');
+      let tomorrowStartOfDay = luxon.DateTime.fromJSDate(this.currentDate).plus({day: 1}).startOf('day');
+      let parsedStartOfDay = luxon.DateTime.fromJSDate(new Date(date)).startOf('day');
+
+      if (parsedStartOfDay.equals(todayStartOfDay)) this.todayIs = dayType;
+      if (parsedStartOfDay.equals(tomorrowStartOfDay)) this.tomorrowWillBe = dayType;
+
+      return new Date(date);
     }
     // Parses a date reange, setting day type if current date (or tomorrow's) is within range:
     const parseDateRange = (range, dayType) => {
-      // let parsedDate = new Date(date);
-      let start = new Date(range.start);
-      let end = new Date(range.end);
-      let today = luxon.DateTime.local().startOf('day');
-      let tomorrow = luxon.DateTime.local().plus({days: 1}).startOf('day');
-      if (
-        luxon.DateTime.fromJSDate(start).startOf('day') <= today &&
-        luxon.DateTime.fromJSDate(end).startOf('day') >= today
-      ) this.todayIs = dayType;
-      if (
-        luxon.DateTime.fromJSDate(start).startOf('day') <= tomorrow &&
-        luxon.DateTime.fromJSDate(end).startOf('day') >= tomorrow
-      ) this.tomorrowWillBe = dayType;
-      return {start, end};
+      let todayStartOfDay = luxon.DateTime.fromJSDate(this.currentDate).startOf('day');
+      let tomorrowStartOfDay = luxon.DateTime.fromJSDate(this.currentDate).plus({day: 1}).startOf('day');
+      let rangeStartOfDay = luxon.DateTime.fromJSDate(new Date(range.start)).startOf('day');
+      let rangeEndOfDay = luxon.DateTime.fromJSDate(new Date(range.end)).startOf('day');
+
+      if (rangeStartOfDay <= todayStartOfDay && rangeEndOfDay >= todayStartOfDay) this.todayIs = dayType;
+      if (rangeStartOfDay <= tomorrowStartOfDay && rangeEndOfDay >= tomorrowStartOfDay) this.tomorrowWillBe = dayType;
+
+      return {start: new Date(range.start), end: new Date(range.end)};
     }
-    // parses remote dates array:
-    let remoteDates = dates.remoteDates.map( (date) => {
-      if (date instanceof Object) return parseDateRange(date, 'remoteDay');
-      return parseDate(date, 'remoteDay');
-    });
+    // Parses an entry from dates json (date or range object):
+    const parseEntry = (entry, dayType) => {
+      if (entry instanceof Object) return parseDateRange(entry, dayType);
+      return parseDate(entry, dayType);
+    }
     // adds remote dates to v-calendar attributes:
     this.attributes.push({
       key: 'remoteDays',
@@ -37,13 +36,8 @@ new Vue({
       popover: {
         label: 'Working from home!'
       },
-      dates: remoteDates
+      dates: dates.remoteDates.map( date => parseEntry(date, 'remoteDay') )
     })
-    // parses free dates array:
-    let freeDates = dates.freeDates.map( (date) => {
-      if (date instanceof Object) return parseDateRange(date, 'freeDay')
-      return parseDate(date, 'freeDay');
-    });
     // adds free dates to v-calendar attributes:
     this.attributes.push({
       key: 'freeDays',
@@ -53,22 +47,29 @@ new Vue({
       popover: {
         label: 'FREE DAY!'
       },
-      dates: freeDates
+      dates: dates.freeDates.map( date => parseEntry(date, 'freeDay') )
     });
+    // check if today will be weekend:
+    let todayWeekday = (this.currentDate).getDay();
+    if (todayWeekday == 6 || todayWeekday == 0) this.todayIs = 'weekendDay';
+    // check if tomorrow will be weekend:
+    if (todayWeekday == 5 || todayWeekday == 6) this.tomorrowWillBe = 'weekendDay';
 
   },
 
   data: {
 
+    // currentDate: new Date(),
+    currentDate: new Date(),
     todayIs: 'officeDay',
-    tomorrowWillBe: null,
+    tomorrowWillBe: 'officeDay',
 
     attributes: [
       // highlight current day:
       {
         key: 'today',
         bar: 'red',
-        dates: new Date()
+        dates: this.currentDate
       },
       // highlight current week:
       {
@@ -85,6 +86,10 @@ new Vue({
   },
 
   computed: {
+    minDate: function() {
+      return luxon.DateTime.fromJSDate(new Date()).startOf('week').toJSDate();
+    },
+
     todayIsRemote: function() {
       return this.todayIs === 'remoteDay';
     },
@@ -95,6 +100,10 @@ new Vue({
 
     todayIsFree: function() {
       return this.todayIs === 'freeDay';
+    },
+
+    todayIsWeekend: function() {
+      return this.todayIs === 'weekendDay';
     },
 
     tomorrowWillBeRemote: function() {
@@ -109,7 +118,12 @@ new Vue({
       return this.tomorrowWillBe === 'freeDay';
     },
 
+    tomorrowWillBeWeekend: function() {
+      return this.tomorrowWillBe === 'weekendDay';
+    },
+
     tomorrowMessage: function() {
+      if (this.tomorrowWillBeWeekend) return 'Enjoy the weekend!';
       if (this.tomorrowWillBeFree) return 'NO WORKING TOMORROW!';
       if (this.tomorrowWillBeOffice) return 'Tomorrow working from OFFICE';
       if (this.tomorrowWillBeRemote) return 'Tomorrow working from HOME!';

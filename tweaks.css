@@ -44,6 +44,11 @@ body {
   color: white;
 }
 
+.weekend {
+  background-color: #fca311;
+  color: white;
+}
+
 .ilustration {
   width: 95%;
   margin-top: 2rem;
