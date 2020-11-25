@@ -28,8 +28,7 @@
             :attributes="attributes"
             :columns="$screens({ default: 1, md: 2, lg: 4 })"
             :rows="$screens({ default: 1, md: 2, lg: 2 })"
-            :is-expanded="$screens({ default: true, md: true, lg: false })"
-            :min-date="minDate">
+            :is-expanded="$screens({ default: true, md: true, lg: false })">
           </v-calendar>
         </div>
         <div id="footer" :class="{ 'working-home': tomorrowWillBeRemote, office: tomorrowWillBeOffice, 'working-no': tomorrowWillBeFree, 'weekend': tomorrowWillBeWeekend}" v-cloak>

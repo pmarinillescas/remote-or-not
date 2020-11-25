@@ -41,9 +41,7 @@ new Vue({
     // adds free dates to v-calendar attributes:
     this.attributes.push({
       key: 'freeDays',
-      highlight: {
-        color: 'green'
-      },
+      highlight: 'green',
       popover: {
         label: 'FREE DAY!'
       },
@@ -86,9 +84,6 @@ new Vue({
   },
 
   computed: {
-    minDate: function() {
-      return luxon.DateTime.fromJSDate(new Date()).startOf('week').toJSDate();
-    },
 
     todayIsRemote: function() {
       return this.todayIs === 'remoteDay';
