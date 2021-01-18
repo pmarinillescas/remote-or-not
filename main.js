@@ -1,6 +1,10 @@
 new Vue({
   el: '#app',
   created: function() {
+    const y = import(`https://github.com/luixal/remote-or-not/raw/master/dates-2021.json`);
+    console.log(y);
+    const z = import(`./dates-2021.json`);
+      console.log(z);
     // Parses a single date, setting day type if it's current date or tomorrow's:
     const parseDate = (date, dayType) => {
       let todayStartOfDay = luxon.DateTime.fromJSDate(this.currentDate).startOf('day');
