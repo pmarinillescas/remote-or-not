@@ -1,10 +1,6 @@
 new Vue({
   el: '#app',
   created: function() {
-    const y = import(`https://github.com/luixal/remote-or-not/raw/master/dates-2021.json`);
-    console.log(y);
-    const z = import(`./dates-2021.json`);
-      console.log(z);
     // Parses a single date, setting day type if it's current date or tomorrow's:
     const parseDate = (date, dayType) => {
       let todayStartOfDay = luxon.DateTime.fromJSDate(this.currentDate).startOf('day');
@@ -50,6 +46,15 @@ new Vue({
         label: 'FREE DAY!'
       },
       dates: dates.freeDates.map( date => parseEntry(date, 'freeDay') )
+    });
+    // adds special dates to v-calendar attributes:
+    this.attributes.push({
+      key: 'specialDays',
+      highlight: 'red',
+      popover: {
+        label: 'Special Day!'
+      },
+      dates: dates.specialDates.map( date => parseEntry(date, 'freeDay') )
     });
     // check if today will be weekend:
     let todayWeekday = (this.currentDate).getDay();
